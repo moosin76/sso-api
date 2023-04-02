@@ -4,6 +4,7 @@ const redisAdapter = require('socket.io-redis');
 const { instrument } = require("@socket.io/admin-ui");
 
 const roomHandler = require('./roomHandler');
+const ssoHandler = require('./ssoHandler');
 
 module.exports = function (webServer) {
 	const io = new Server(webServer, {
@@ -26,6 +27,7 @@ module.exports = function (webServer) {
 
 	io.on('connection', socket => {
 		roomHandler(io, socket);
+		ssoHandler(io, socket);
 		
 		console.log('Connected =>', socket.id);
 		socket.on('disconnect', () => {
