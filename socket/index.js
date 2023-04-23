@@ -21,7 +21,7 @@ module.exports = function (webServer) {
 		auth: {
 			type: 'basic',
 			username: "ezcode",
-			password: "$2a$12$uh9PltlGa6pruWId7IFP7.g0iHtcCYV94XWX9bxSAWGlUC4dU7g2m",
+			password: "$2a$12$uh9PltlGa6pruWId7IFP7.g0iHtcCYV94XWX9bxSAWGlUC4dU7g2m", // abcd1234
 		},
 	})
 
