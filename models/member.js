@@ -1,31 +1,47 @@
+const genPassword = require('../lib/genPassword')
+
 module.exports = (sequelize, DataTypes) => {
 	const member = sequelize.define('member', {
-		mb_id: {
+		mb_email: {
 			type: DataTypes.STRING,
 			unique: true,
 			allowNull: false,
+			validate: {
+				isEmail: {
+					msg: '이메일 형식에 맞게 입력하세요',
+				},
+			}
 		},
 		mb_password: {
 			type: DataTypes.STRING,
-			defaultValue: '',
 			allowNull: false,
+			set(value) {
+				this.setDataValue('mb_password', genPassword(value));
+			},
+			get() {
+				return undefined;
+			}
 		},
 		mb_name: {
 			type: DataTypes.STRING,
 			defaultValue: '',
 			allowNull: false,
-		},
-		mb_email: {
-			type: DataTypes.STRING,
-			defaultValue: '',
 			validate: {
-				isEmail: true,
+				len: {
+					args: [2, 30],
+					msg : '이름은 2자이상 입력하세요.'
+				}
 			}
 		},
 		mb_hp: {
 			type: DataTypes.STRING,
-			allowNull: false,
-			defaultValue: '',
+			allowNull: true,
+			validate : {
+				is:{
+					args : /^(\d{2,3}-)?\d{3,4}-\d{4}$/,
+					msg : "전화번호 형식에 맞게 입력하세요."
+				}
+			}
 		}
 	}, {
 		freezeTableName: true,

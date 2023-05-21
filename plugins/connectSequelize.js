@@ -6,6 +6,15 @@ module.exports = function (config, modelPath, log = true) {
 	const sequelizeConfig = {
 		...config,
 		dialect: "mysql",
+		timezone : "+09:00",
+		dialectOptions: {
+			charset: 'utf8mb4',
+			dateStrings: true,
+			typeCast: true
+		},
+		define: {
+			timestamps: true
+		},
 		logging: log ? console.log : false
 	}
 	const sequelize = new Sequelize(

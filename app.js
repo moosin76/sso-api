@@ -13,9 +13,29 @@ app.use(cors({
 	credentials: true,
 }))
 
+// logger
+global.$LOG = require('./plugins/logger');
+
+app.use(async (ctx, next) => {
+  await next();
+  const rt = ctx.response.get('X-Response-Time');
+  $LOG.info(`${ctx.method} ${ctx.url} - ${rt}`);
+});
+
+// x-response-time
+app.use(async (ctx, next) => {
+  const start = Date.now();
+  await next();
+  const ms = Date.now() - start;
+  ctx.set('X-Response-Time', `${ms}ms`);
+});
+
 // 바디파서
 const bodyParser = require('koa-bodyparser');
 app.use(bodyParser());
+
+// 콘트롤러 호출 고차함수
+global.$API_CALL = require('./lib/API_CALL');
 
 // 소켓
 global.$IO = require('./socket')(webServer);
