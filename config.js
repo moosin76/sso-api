@@ -7,9 +7,16 @@ const production = {
 		password: 'test1234',
 		database: 'bnbssoapi'
 	},
-	REDIS : {
-		host : 'localhost',
-		port : 6379
+	REDIS: {
+		host: 'localhost',
+		port: 6379
+	},
+	JWT: {
+		option: {
+			algorithm: 'HS256',
+			issuer: "ezcode",
+		},
+		SECRET: 'b9d3a576-2c8a-4850-ae5d-c11474f72acb'
 	}
 }
 
@@ -22,10 +29,17 @@ const development = {
 		password: 'test1234',
 		database: 'bnbssoapi'
 	},
-	REDIS : {
-		host : 'localhost',
-		port : 6379
+	REDIS: {
+		host: 'localhost',
+		port: 6379
+	},
+	JWT: {
+		option: {
+			algorithm: 'HS256',
+			issuer: "ezcode",
+		},
+		SECRET: 'b9d3a576-2c8a-4850-ae5d-c11474f72acb'
 	}
 }
 
-module.exports = { production, development };
+module.exports = process.env.NODE_ENV !== 'production' ? development : production;

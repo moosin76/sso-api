@@ -1,4 +1,4 @@
-const config = require('../config')[process.env.NODE_ENV];
+const config = require('../config');
 const { Server } = require('socket.io');
 const redisAdapter = require('socket.io-redis');
 const { instrument } = require("@socket.io/admin-ui");
