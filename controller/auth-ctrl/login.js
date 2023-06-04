@@ -17,5 +17,6 @@ module.exports = async (ctx) => {
 	}
 
 	const token = jwt.getToken(member);
+	
 	return { member, token };
 }

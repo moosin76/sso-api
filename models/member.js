@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
 	const member = sequelize.define('member', {
 		mb_email: {
 			type: DataTypes.STRING,
-			unique: true,
+			unique: 'email',
 			allowNull: false,
 			validate: {
 				isEmail: {
