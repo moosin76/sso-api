@@ -18,5 +18,9 @@ module.exports = (io, socket) => {
 		} catch (e) {
 			console.error(e)
 		}
+	});
+
+	socket.on('sso:logout', async(socketId)=> {	
+		socket.to(socketId).emit('sso:logout');
 	})
 }
