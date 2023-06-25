@@ -1,7 +1,14 @@
+const jwt = require('../../plugins/jwt');
+
 module.exports = async (ctx) => {
-	const {socketId} = ctx.request.body;
+	const {socketToken} = ctx.request.body;
+	if(!socketToken) {
+		throw new Error("socketToken 없음");
+	}
+
+	const socketId = jwt.getSocketId(socketToken);
 	if(!socketId) {
-		throw new Error("socket ID 없음");
+		throw new Error("소켓 토큰이 올바르지 않음");
 	}
 
 	const row = await $DB.token.destroy({where:{socketId}})

@@ -12,4 +12,14 @@ const verify = (token) => {
 	return jwt.verify(token, config.SECRET);
 }
 
-module.exports = { getToken, verify };
+const getSocketId = (token) => {
+	try {
+		const encoded = jwt.verify(token, config.SECRET);
+		return encoded.socketId;
+	} catch (e) {
+		console.error(e);
+		return null;
+	}
+}
+
+module.exports = { getToken, verify, getSocketId };
