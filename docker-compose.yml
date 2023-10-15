@@ -1,0 +1,42 @@
+services:
+  api:
+    build: sso-api
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+      - redis
+    restart: always
+  db:
+    image: mysql:5.7
+    command: "--default-authentication-plugin=mysql_native_password"
+    volumes:
+      - ./dbdata:/var/lib/mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=abcd1234
+      - MYSQL_DATABASE=sso
+      - MYSQL_USER=ssouser
+      - MYSQL_PASSWORD=test1234
+    expose:
+      - 3306
+      - 33060
+  redis:
+    image: redis:latest
+    ports:
+      - 6379:6379
+    restart: always
+  server:
+    build: sso-server
+    ports:
+      - 4000:3000
+    depends_on:
+      - api
+    restart: always
+  consumer:
+    build: sso-consumer
+    ports:
+      - 5000:3000
+    depends_on:
+      - server
+    restart: always
